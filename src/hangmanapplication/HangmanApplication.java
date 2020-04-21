@@ -2,11 +2,12 @@ package hangmanapplication;
 // blondiebytes 2015 (c)
 // author katrynhodge
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class HangmanApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	// how do we play the game
 
         Scanner sc = new Scanner(System.in);
@@ -26,9 +27,39 @@ public class HangmanApplication {
         while (doYouWantToPlay) {
             //keep playing
 
-            while(!game.isOver()) {
+            System.out.println("All right. Let's play!");
+
+            Hangman game = new Hangman();
+
+            do {
+                // Draw the things
+                System.out.println();
+                System.out.println(game.drawPicture());
+                System.out.println();
+                System.out.println(game.getFormalCurrentGuess());
+                System.out.println(game.mysteryWord);
+
+                // Get the guess
+                System.out.println("Enter a character that you think is in the word");
+                char guess = (sc.next().toLowerCase()).charAt(0);
+
+                // check if in is guessed already
+                while (game.isGuessedAlready(guess)) {
+                    System.out.println("Try again! You have already guessed this");
+                    guess = (sc.next().toLowerCase()).charAt(0);
+                }
+
+                if (game.playGuess(guess)) {
+                    System.out.println("Great guess! That character is in the word");
+                } else {
+                    System.out.println("Unfortunately it is in the word");
+                }
+
+
+                // Play the game
 
             }
+            while(!game.isOver()); // keep playing untill over
 
             //play again?
             System.out.println();
